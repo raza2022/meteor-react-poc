@@ -15,6 +15,8 @@ export const App = () => {
     const isLoading = useSubscribe("tasks");
     console.log(isLoading())
 
+    const logout = () => Meteor.logout();
+
     const user = useTracker(() => Meteor.user());
 
 
@@ -25,6 +27,7 @@ export const App = () => {
     const pendingTasksTitle = `${
         pendingTasksCount ? ` (${pendingTasksCount})` : ''
     }`;
+
 
     const tasks = useTracker(() =>
         TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
@@ -62,6 +65,9 @@ export const App = () => {
             <div className="main">
                 {user ? (
                     <Fragment>
+                        <div className="user" onClick={logout}>
+                            {user.username} 🚪
+                        </div>
                         <TaskForm />
 
                         <div className="filter">
